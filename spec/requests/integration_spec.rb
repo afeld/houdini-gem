@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "End-to-end" do
   before do
-    Houdini.setup 'production', :app_url => "http://my-app:3333/"
+    Houdini.setup 'production', :api_key => "abc123", :app_url => "http://my-app:3333/"
     DummyApp::Article.delete_all
   end
 
