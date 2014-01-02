@@ -10,7 +10,9 @@ module Houdini
         raise EnvironmentMismatchError, "Environment received does not match Houdini.environment"
       end
 
-      if !Rack::Utils.secure_compare(params[:api_key], Houdini.api_key)
+      if params[:api_key].blank?
+        raise APIKeyMistmatchError, "Please pass API key."
+      elsif !Rack::Utils.secure_compare(params[:api_key], Houdini.api_key)
         raise APIKeyMistmatchError, "API key received doesn't match our API key."
       end
 

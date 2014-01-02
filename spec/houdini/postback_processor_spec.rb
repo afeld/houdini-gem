@@ -16,8 +16,14 @@ describe Houdini::PostbackProcessor, ".process!" do
     end
   end
 
-  context "when in production and given API key doesn't match" do
-    it "should raise an APIKeyMistmatchError" do
+  context "when in production" do
+    it "should raise an APIKeyMistmatchError when no API key is given" do
+      lambda{
+        Houdini::PostbackProcessor.process 'Class', 42, :environment => "production"
+      }.should raise_error(Houdini::PostbackProcessor::APIKeyMistmatchError)
+    end
+
+    it "should raise an APIKeyMistmatchError when given API key doesn't match" do
       lambda{
         Houdini::PostbackProcessor.process 'Class', 42, :environment => "production", :api_key => "ANOTHER_KEY"
       }.should raise_error(Houdini::PostbackProcessor::APIKeyMistmatchError)
